@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Rashad's Blog</title>
+</head>
+<body>
+    
+        {% include 'includes/navbar.html' %}
+
+        <div style="margin-top: 30px; margin-bottom: 100px;" class="container">
+            {% if messages %}
+                
+                    {% for message in messages %}
+                    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                    {% endfor %}
+                
+            {% endif %}
+            {% block body %}
+                
+            {% endblock body %}
+        </div>
+        
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+</body>
+</html>

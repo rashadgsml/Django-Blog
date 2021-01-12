@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+        <h3>Articles</h3>
+        <hr>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <form class="form-inline md-form mr-auto mb-4">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" name="keyword" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-danger" type="submit">Search</button>
+            </form>       
+        </div>
+    </div>
+</div>
+
+
+{% if articles %}
+{% for article in articles %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+    <!-- Post Content Column -->
+    <div class="col-lg-8">
+
+      <!-- Title -->
+      <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a>
+
+      <!-- Author -->
+      <p class="lead">
+        by
+        {{article.author.username}}
+      </p>
+
+      <hr>
+
+      <!-- Date/Time -->
+      <p>{{article.created_date}}</p>
+
+      <hr>
+
+      <!-- Preview Image -->
+      
+      {% if article.article_image %}
+      <img class="img-fluid rounded" src="{{article.article_image.url}}" alt="">
+      {% endif %}  
+      <hr>
+      <!-- Post Content -->
+      <p class="lead">
+          {{article.content|safe|truncatewords:10}}
+      </p>
+      <a style="float: right;" href="{% url 'article:detail' article.id %}" class="btn btn-danger">Read more</a>
+      <hr>
+        </div>
+      </div>
+    </div>
+{% endfor %}
+    
+{% else %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <div class="alert alert-danger">No article found</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock body %}
+    
